@@ -1,10 +1,9 @@
 #include "stack.h"
 
 // implement functions behind
-elem *head;
 void initialize(stack *stk){
-    head = malloc(sizeof(struct elem));
-    head -> next = EMPTY;
+    stk -> cnt = 0;
+    stk -> top = NULL;
 }
 void push(data d, stack *stk){
     elem *tmp = (elem *)malloc(sizeof(elem));
@@ -24,11 +23,13 @@ data pop(stack *stk){
     return rrr;
 }
 data top(stack *stk){
-    return stk -> top;
+    elem *tmp;
+    tmp = stk -> top;
+    return tmp -> d;
 }
 boolean empty(const stack *stk){
-    if (stk -> top == EMPTY) return false;
-    else return true;
+    if (stk -> top == EMPTY) return true;
+    else return false;
 }
 boolean full(const stack *stk){
     if (stk -> cnt == FULL) return true;
