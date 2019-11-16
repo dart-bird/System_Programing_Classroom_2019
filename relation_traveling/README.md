@@ -9,7 +9,6 @@ Write a program that finds a path of length 3.
 
 The following is an example of an ordered pair with path 3:
 
-(1, 3) (3, 5) (5, 2)
 
 =====
 
