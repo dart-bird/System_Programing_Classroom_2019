@@ -10,7 +10,8 @@ tree* initialize(int data){
 
 int isLeaf(tree* curNode, int direction){
   if(direction < 0) return curNode -> leftchild == NULL?1:0;
-  else return curNode -> rightchild  == NULL?1:0; 
+  else return curNode -> rightchild  == NULL?1:0;
+  
 }
 
 void insert_node(tree* curNode, int data){
@@ -23,10 +24,10 @@ void insert_node(tree* curNode, int data){
     else printf("duplicated\n");
 }
 
-void inorder(tree * curNode){
-    if(curNode != NULL){
-      inorder(curNode -> leftchild);
-      printf("%d ",curNode -> data);
-      inorder(curNode -> rightchild);
-    }
+void preorder(tree* curNode){
+  if(curNode != NULL){
+    printf("%d ",curNode -> data);
+    preorder(curNode -> leftchild);
+    preorder(curNode -> rightchild);
+  }
 }

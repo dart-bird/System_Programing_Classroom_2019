@@ -14,7 +14,7 @@ int main(void) {
     else root = initialize(data);
   }
   
-  inorder(root);
+  postorder(root);
   
   return 0;
 }
