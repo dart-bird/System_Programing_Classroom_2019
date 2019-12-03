@@ -6,9 +6,9 @@ void Registration();
 void ShowAll();
 void Delete();
 void FindByBirth();
-
+char *str;
 int main(){
-    
+    str = (char*)malloc(sizeof(char) * 8);
     while (menu()){ //0을 받으면 종료되는 형태 exit_code 값
         menu();
 
@@ -23,7 +23,7 @@ int menu() {
     puts("*****Menu*****");
         puts("1. Registration, 2. ShowAll, 3. Delete, 4. FindByBirth, 5. Exit");
         printf("Enter_the_menu_number: ");
-        fflush(stdin); //remove enter buffer
+        //fflush(stdin); //remove enter buffer
         scanf("%d",&menu_num);
         //fflush(stdin); //remove enter buffer
         switch (menu_num){
@@ -50,14 +50,17 @@ int menu() {
 }
 
 void Registration() {
-    char *nameStr = (char*)malloc(sizeof(char) * 21); //1bytes for'/0'
-    char *phoneStr = (char*)malloc(sizeof(char) * 18); //3bytes for '-'
-    char *birthStr = (char*)malloc(sizeof(char) * 8);
-    int a;
-    scanf("%d", &a); //정수 입력은 되는데 string 입력은 안됨. ??
-    scanf("Name:%s ",nameStr);
-    scanf("Phone_number:%s",phoneStr);
-    scanf("Birth:%s",birthStr);
+    char *nameStr = (char*)malloc(sizeof(char) * 20);
+    char *phoneStr = (char*)malloc(sizeof(char) * 15);
+    char *birthStr = (char*)malloc(sizeof(char) * 8); 
+    
+    printf("Name:");
+    scanf("%s",nameStr);
+    printf("Phone_number:");
+    scanf("%s",phoneStr);
+    printf("Birth:");
+    scanf("%s",birthStr);
+
     printf("Name: %s", nameStr);
     printf("Phone_number: %s", phoneStr);
     printf("Birth: %s\n", birthStr);
