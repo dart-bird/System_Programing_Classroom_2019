@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "func.c"
+#include "func.h"
 #include "data.h"
 
 int menu();
@@ -25,24 +25,19 @@ int menu() {
         scanf("%d",&menu_num);
         switch (menu_num){
             case 1: //1. Registration
-                //printf("this menu %d\n",menu_num);
                 Registration(&cad);
                 break;
             case 2: //2. ShowAll
-                //printf("this menu %d\n",menu_num);
                 ShowAll();
                 break;
             case 3: //3. Delete
-                //printf("this menu %d\n",menu_num);
                 Delete();
                 break;
             case 4: //4. FindByBirth
-                //printf("this menu %d\n",menu_num);
                 FindByBirth();
                 break;
             case 5: //5. Exit
                 exit_code = 0; // 종료 조건 변수에 1
-                //printf("this menu %d\n",menu_num);
                 break;
     }
     return exit_code;
