@@ -1,44 +1,32 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "func.h"
 #include "data.h"
 
-int menu();
-
-contactData cad; //init C ont A ct D ata
+void menu();
 
 int main(){
-    while (menu()){ //0을 받으면 종료되는 형태 exit_code 값
+    while (1){
         menu();
     }
     
     return 0;
 }
 
-int menu() {
-    static int exit_code = 1;
-    static int menu_num;
+void menu() {
+    int cmd;
     puts("*****Menu*****");
-        puts("1. Registration, 2. ShowAll, 3. Delete, 4. FindByBirth, 5. Exit");
-        printf("Enter_the_menu_number: ");
-        scanf("%d",&menu_num);
-        switch (menu_num){
-            case 1: //1. Registration
-                Registration(&cad);
-                break;
-            case 2: //2. ShowAll
-                ShowAll();
-                break;
-            case 3: //3. Delete
-                Delete();
-                break;
-            case 4: //4. FindByBirth
-                FindByBirth();
-                break;
-            case 5: //5. Exit
-                exit_code = 0; // 종료 조건 변수에 1
-                break;
+    puts("1. Registration, 2. ShowAll, 3. Delete, 4. FindByBirth, 5. Exit");
+    printf("Enter_the_menu_number: ");
+    scanf("%d",&cmd);
+    if (cmd == 1){
+        Registration();
+    } else if (cmd == 2){
+        ShowAll();
+    } else if (cmd == 3){
+        Delete();
+    } else if (cmd == 4){
+        FindByBirth();
+    } else if (cmd == 5){
+        exit(0);
+    } else{
+        printf("Please Try again.");
     }
-    return exit_code;
 }
