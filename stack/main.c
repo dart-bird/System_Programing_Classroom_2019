@@ -1,4 +1,4 @@
-#include "stack.c"
+#include "stack.h"
 int main(void){
 	char str[] = "My name is Hasoo Eun!";
 	int i;
