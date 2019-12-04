@@ -1,30 +1,44 @@
 #include "data.h"
 
 void Registration() {
-    struct contactData* tmp = (struct contactData*)malloc(sizeof(struct contactData));
-    tmp-> name = (char*)malloc(sizeof(char)*21);
-    tmp-> phoneNumber = (char*)malloc(sizeof(char)*16);
-    tmp-> birth = (char*)malloc(sizeof(char)*9);
-    if ((*data) != NULL) tmp -> next = data[0];
-    else tmp -> next = NULL;
-    data = &tmp;
+
+    struct contactData *newcontact;
+    newcontact = (struct contactData*)malloc(sizeof(struct contactData));
+    
+    newcontact-> name = (char*)malloc(sizeof(char)*21);
+    newcontact-> phoneNumber = (char*)malloc(sizeof(char)*16);
+    newcontact-> birth = (char*)malloc(sizeof(char)*9);
+    // if ((*data) != NULL) newcontact -> next = data[0];
+    // else newcontact -> next = NULL;
+    // data = &newcontact;
     printf("Name:");
-    scanf("%s",tmp->name);
+    scanf("%s",newcontact->name);
 
     printf("Phone_number:");
-    scanf("%s",tmp->phoneNumber);
+    scanf("%s",newcontact->phoneNumber);
 
     printf("Birth:");
-    scanf("%s",tmp->birth);
+    scanf("%s",newcontact->birth);
+
+    newcontact->next = (*data)->next;
+    (*data)->next = newcontact;
     
-    struct contactData* curr = *(data);
-    int cnt = 0;
+    struct contactData *curr = (*data)->next;
     while(curr != NULL){
-        printf("%s\n", curr->name);
-        cnt++;
+        printf("%s", curr->name);
+        printf("%s", curr->phoneNumber);
+        printf("%s", curr->birth);
         curr = curr->next;
     }
-    printf("count: %d\n", cnt);
+    
+    // struct contactData *curr = *(data);
+    // int cnt = 0;
+    // while(curr != NULL){
+    //     printf("%s\n", curr->name);
+    //     cnt++;
+    //     curr = curr->next;
+    // }
+    // printf("count: %d\n", cnt);
 }
 
 void ShowAll() {
