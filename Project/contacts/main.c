@@ -3,6 +3,10 @@
 void menu();
 
 int main(){
+    
+    (*data) = (struct contactData*)malloc(sizeof(struct contactData));
+    (*data)->next = NULL;
+
     while (1){
         menu();
     }
@@ -16,17 +20,25 @@ void menu() {
     puts("1. Registration, 2. ShowAll, 3. Delete, 4. FindByBirth, 5. Exit");
     printf("Enter_the_menu_number: ");
     scanf("%d",&cmd);
-    if (cmd == 1){
+    switch (cmd)
+    {
+    case 1:
         Registration();
-    } else if (cmd == 2){
+        break;
+    
+    case 2:
         ShowAll();
-    } else if (cmd == 3){
+        break;
+    
+    case 3:
         Delete();
-    } else if (cmd == 4){
+        break;
+    
+    case 4:
         FindByBirth();
-    } else if (cmd == 5){
+        break;
+
+    case 5:
         exit(0);
-    } else{
-        printf("Please Try again.");
     }
 }
