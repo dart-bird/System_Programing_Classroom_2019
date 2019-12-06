@@ -70,9 +70,7 @@ void Delete() {
             curr->next=rContactData->next;
             free(rContactData);
             cnt--;
-            break;  
-
-
+            break;
         } else printf("No record founded.\n");
         curr = curr->next;
     }
