@@ -3,10 +3,11 @@
 void menu();
 
 int main(){
-    
-    (*data) = (struct contactData*)malloc(sizeof(struct contactData));
-    (*data)->next = NULL;
-
+    data = (struct contactData**)malloc(sizeof(struct contactData*));
+    struct contactData* head = (struct contactData*)malloc(sizeof(struct contactData)*1);
+    head->name = "head";
+    head->next = NULL;
+    data[0] = head;
     while (1){
         menu();
     }
