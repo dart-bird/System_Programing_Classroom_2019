@@ -9,7 +9,6 @@ struct contactData {
   struct contactData *next; //next contactData node
 };
 struct contactData **data;
-
 void Registration();
 void ShowAll();
 void Delete();
