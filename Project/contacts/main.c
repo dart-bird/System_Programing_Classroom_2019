@@ -1,9 +1,9 @@
 #include "data.h"
-
 void menu();
 
 int main(){
     data = (struct contactData*)malloc(sizeof(struct contactData));
+    ReadFile();
     while (1){
         menu();
     }
@@ -15,12 +15,13 @@ void menu() {
     int cmd;
     puts("*****Menu*****");
     puts("1. Registration, 2. ShowAll, 3. Delete, 4. FindByBirth, 5. Exit");
-    printf("Enter_the_menu_number: ");
+    printf("Enter_the_menu_number:");
     scanf("%d",&cmd);
     switch (cmd)
     {
     case 1:
         Registration();
+        WriteFile();
         break;
     
     case 2:
@@ -29,6 +30,7 @@ void menu() {
     
     case 3:
         Delete();
+        WriteFile();
         break;
     
     case 4:
@@ -36,6 +38,7 @@ void menu() {
         break;
 
     case 5:
+        WriteFile();
         exit(0);
     }
 }
