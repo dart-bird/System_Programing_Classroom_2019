@@ -8,7 +8,7 @@ struct contactData {
   char *birth;
   struct contactData *next; //next contactData node
 };
-struct contactData **data;
+struct contactData *data;
 void Registration();
 void ShowAll();
 void Delete();
