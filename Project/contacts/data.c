@@ -2,12 +2,13 @@
 #include <string.h>
 // https://www.learn-c.org/en/Linked_lists
 int cnt = 0;
+
 void Registration() {
     struct contactData* tmp = (struct contactData*)malloc(sizeof(struct contactData));
     tmp-> name = (char*)malloc(sizeof(char)*21);
     tmp-> phoneNumber = (char*)malloc(sizeof(char)*16);
     tmp-> birth = (char*)malloc(sizeof(char)*9);
-    struct contactData* curr = data[0];
+    struct contactData* curr = data;
     printf("Name:");
     scanf("%s",tmp->name);
         
@@ -29,7 +30,7 @@ void Registration() {
                 tmp->next = save;
                 chk = 1;
                 break;
-            }
+            }   
             curr = curr->next;
         }
         if (chk == 0) curr->next = tmp;
@@ -39,7 +40,7 @@ void Registration() {
 }
 
 void ShowAll() {
-    struct contactData* curr = data[0]->next;
+    struct contactData* curr = data->next;
     while(curr != NULL){
         printf("%s %s %s\n", curr->name, curr->phoneNumber, curr->birth);
         curr = curr->next;
@@ -50,28 +51,26 @@ void Delete() {
     char *inputStr = (char*)malloc(sizeof(char)*21);
     printf("Name:");
     scanf("%s",inputStr);
-    struct contactData* curr = data[0]->next;
-    if (curr == NULL) printf("No record founded.\n");
-    
+    struct contactData* curr = data->next;
     while (curr != NULL){
-        if (cnt==1 && strcmp(inputStr,data[0]->name))
-        {
-            struct contactData* rContactData = data[0]->next;
-            data[0]->next=rContactData->next;
-            free(rContactData);
+        printf("%s", curr->name);
+        if(strcmp(curr->name, inputStr)==0){ //처음 삭제
+            struct contactData* targetData = data->next;
+            data->next = targetData->next;
+            free(targetData);
             cnt--;
             break;
         }
-        
-        if(strcmp(inputStr, curr->name)){
-            if(curr == NULL) break;
-            struct contactData* rContactData = curr->next;
-            if(rContactData==NULL) break;
-            curr->next=rContactData->next;
-            free(rContactData);
+        if(strcmp(curr->next->name, inputStr)==0){ //중간 후반 삭제
+            struct contactData* targetData = curr->next;
+            curr->next = targetData->next;
+            free(targetData);
             cnt--;
             break;
-        } else printf("No record founded.\n");
+        } else {
+            printf("No record founded.\n");
+            break;
+        }
         curr = curr->next;
     }
 }
