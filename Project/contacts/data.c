@@ -76,6 +76,21 @@ void Delete() {
 }
 
 void FindByBirth() {
-
+    char *inputBirth = (char*)malloc(sizeof(char)*3);
+    char *tmpBirth = (char*)malloc(sizeof(char)*9);
+    printf("Birth:");
+    scanf("%s",inputBirth);
+    struct contactData* curr = data->next;
+    while(curr != NULL){
+        strcpy(tmpBirth, curr->birth);
+        printf("%s",tmpBirth+4);
+        if(strcmp(tmpBirth+4,"0") == 0 && strcmp(inputBirth, tmpBirth+5) == 0){
+            printf("%s %s %s\n", curr->name, curr->phoneNumber, curr->birth);
+        }
+        if(strcmp(tmpBirth+4,"1") == 0 && strcmp(inputBirth+0, tmpBirth+4) == 0 && strcmp(inputBirth+1, tmpBirth+5) == 0){
+            printf("%s %s %s\n", curr->name, curr->phoneNumber, curr->birth);
+        }
+        curr = curr->next;
+    }
 }
 
