@@ -13,4 +13,6 @@ void Registration();
 void ShowAll();
 void Delete();
 void FindByBirth();
+void ReadFile();
+void WriteFile();
 #endif
