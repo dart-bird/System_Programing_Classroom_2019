@@ -1,39 +1,40 @@
 #include "data.h"
 #include <string.h>
+
 // https://www.learn-c.org/en/Linked_lists
 int cnt = 0;
 
 void Registration() {
-    struct contactData* tmp = (struct contactData*)malloc(sizeof(struct contactData));
-    tmp-> name = (char*)malloc(sizeof(char)*21);
-    tmp-> phoneNumber = (char*)malloc(sizeof(char)*16);
-    tmp-> birth = (char*)malloc(sizeof(char)*9);
+    struct contactData* tmp_ = (struct contactData*)malloc(sizeof(struct contactData));
+    tmp_-> name = (char*)malloc(sizeof(char)*21);
+    tmp_-> phoneNumber = (char*)malloc(sizeof(char)*16);
+    tmp_-> birth = (char*)malloc(sizeof(char)*9);
     struct contactData* curr = data;
     printf("Name:");
-    scanf("%s",tmp->name);
+    scanf("%s",tmp_->name);
         
     printf("Phone_number:");
-    scanf("%s",(tmp->phoneNumber));
+    scanf("%s",(tmp_->phoneNumber));
 
     printf("Birth:");
-    scanf("%s",(tmp->birth));
+    scanf("%s",(tmp_->birth));
 
     if(cnt == 0){
-        curr->next = tmp;
-        tmp->next = NULL; //빈 노드를 연결합니다.
+        curr->next = tmp_;
+        tmp_->next = NULL; //빈 노드를 연결합니다.
     } else {
         int chk = 0;
         while(curr->next != NULL){
-            if(strcmp(tmp->name, curr->next->name)<0){ //입력한 이름이 현재 있는 이름보다 클경우 뒤로 감.
+            if(strcmp(tmp_->name, curr->next->name)<0){ //입력한 이름이 현재 있는 이름보다 클경우 뒤로 감.
                 struct contactData* save = curr->next;
-                curr->next = tmp;
-                tmp->next = save;
+                curr->next = tmp_;
+                tmp_->next = save;
                 chk = 1;
                 break;
             }   
             curr = curr->next;
         }
-        if (chk == 0) curr->next = tmp;
+        if (chk == 0) curr->next = tmp_;
     }
     cnt++;
     printf("Count: %d\n", cnt);
@@ -53,7 +54,6 @@ void Delete() {
     scanf("%s",inputStr);
     struct contactData* curr = data->next;
     while (curr != NULL){
-        printf("%s", curr->name);
         if(strcmp(curr->name, inputStr)==0){ //처음 삭제
             struct contactData* targetData = data->next;
             data->next = targetData->next;
@@ -76,21 +76,77 @@ void Delete() {
 }
 
 void FindByBirth() {
-    char *inputBirth = (char*)malloc(sizeof(char)*3);
-    char *tmpBirth = (char*)malloc(sizeof(char)*9);
+    char *str = (char*)malloc(sizeof(char)*10);
     printf("Birth:");
-    scanf("%s",inputBirth);
+    scanf("%s",str);
     struct contactData* curr = data->next;
     while(curr != NULL){
-        strcpy(tmpBirth, curr->birth);
-        printf("%s",tmpBirth+4);
-        if(strcmp(tmpBirth+4,"0") == 0 && strcmp(inputBirth, tmpBirth+5) == 0){
+        if(curr->birth[4] == '0' && str[0] == curr->birth[5]){
             printf("%s %s %s\n", curr->name, curr->phoneNumber, curr->birth);
         }
-        if(strcmp(tmpBirth+4,"1") == 0 && strcmp(inputBirth+0, tmpBirth+4) == 0 && strcmp(inputBirth+1, tmpBirth+5) == 0){
+        if(curr->birth[4] == '1' && str[0] == curr->birth[4] && str[1] == curr->birth[5]){
             printf("%s %s %s\n", curr->name, curr->phoneNumber, curr->birth);
-        }
+        } 
         curr = curr->next;
     }
 }
+void ReadFile(){
 
+    FILE *pFile = NULL;
+
+	pFile = fopen("contactlist.jwdata", "r");
+	if(pFile != NULL){
+		while(!feof(pFile)){
+            struct contactData* tmp_ = (struct contactData*)malloc(sizeof(struct contactData));
+            tmp_-> name = (char*)malloc(sizeof(char)*21);
+            tmp_-> phoneNumber = (char*)malloc(sizeof(char)*16);
+            tmp_-> birth = (char*)malloc(sizeof(char)*9);
+
+            static int cnt_ = 0;
+            fscanf( pFile, "%s %s %s\n", tmp_->name, tmp_->phoneNumber, tmp_->birth );
+            cnt_++;
+
+            struct contactData* curr = data;
+
+            if(cnt == 0){
+                curr->next = tmp_;
+                tmp_->next = NULL; //빈 노드를 연결합니다.
+            } else {
+                int chk = 0;
+                while(curr->next != NULL){
+                    if(strcmp(tmp_->name, curr->next->name)<0){ //입력한 이름이 현재 있는 이름보다 클경우 뒤로 감.
+                        struct contactData* save = curr->next;
+                        curr->next = tmp_;
+                        tmp_->next = save;
+                        chk = 1;
+                        break;
+                    }   
+                    curr = curr->next;
+                }
+                if (chk == 0) curr->next = tmp_;
+            }
+            cnt++;
+        }
+		fclose(pFile);
+	} else {
+        printf("Can not find file!!\nCheck file direction.");
+    }
+}
+
+void WriteFile(){
+    FILE *fp = fopen("contactlist.jwdata", "w");    // hello.txt 파일을 쓰기 모드(w)로 열기.
+                                           // 파일 포인터를 반환
+
+    struct contactData* curr = data->next;
+    while(curr != NULL){
+        fputs(curr->name, fp);   // 파일에 문자열 저장
+        fputs(" ",fp);
+        fputs(curr->phoneNumber, fp);   // 파일에 문자열 저장
+        fputs(" ",fp);
+        fputs(curr->birth, fp);   // 파일에 문자열 저장
+        fputs("\n",fp);
+        curr = curr->next;
+    }
+
+    fclose(fp);    // 파일 포인터 닫기
+}
