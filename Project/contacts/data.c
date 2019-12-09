@@ -3,6 +3,7 @@
 
 // https://www.learn-c.org/en/Linked_lists
 int cnt = 0;
+int chkRecord = 0;
 
 void Registration() {
     struct contactData* tmp_ = (struct contactData*)malloc(sizeof(struct contactData));
@@ -52,27 +53,44 @@ void Delete() {
     char *inputStr = (char*)malloc(sizeof(char)*21);
     printf("Name:");
     scanf("%s",inputStr);
-    struct contactData* curr = data->next;
+    struct contactData* curr = data;
     while (curr != NULL){
-        if(strcmp(curr->name, inputStr)==0){ //처음 삭제
-            struct contactData* targetData = data->next;
-            data->next = targetData->next;
-            free(targetData);
-            cnt--;
-            break;
+        if(curr == data){//head 부분 null-1-2-3-null
+            if(strcmp(curr->next->name, inputStr) == 0){
+                chkRecord = 1;
+                struct contactData* targetData = curr->next;
+                curr->next = targetData->next;
+                free(targetData);
+                cnt--;
+                break;
+            }
         }
-        if(strcmp(curr->next->name, inputStr)==0){ //중간 후반 삭제
-            struct contactData* targetData = curr->next;
-            curr->next = targetData->next;
-            free(targetData);
-            cnt--;
-            break;
-        } else {
-            printf("No record founded.\n");
-            break;
+        else if(curr->next == NULL){//tail
+            if(strcmp(curr->name, inputStr) == 0){
+                chkRecord = 1;
+                struct contactData* targetData = curr->next;
+                curr = targetData;
+                free(targetData);
+                cnt--;
+                break;
+            }
+        }
+        else if(curr != NULL) {
+            if(strcmp(curr->next->name, inputStr) == 0){
+                chkRecord = 1;
+                struct contactData* targetData = curr->next;
+                curr->next = targetData->next;
+                free(targetData);
+                cnt--;
+                break;
+            }
         }
         curr = curr->next;
     }
+    if(chkRecord == 0) {
+      printf("No record founded.\n");
+
+    } else chkRecord = 0;
 }
 
 void FindByBirth() {
@@ -81,20 +99,25 @@ void FindByBirth() {
     scanf("%s",str);
     struct contactData* curr = data->next;
     while(curr != NULL){
-        if(curr->birth[4] == '0' && str[0] == curr->birth[5]){
-            printf("%s %s %s\n", curr->name, curr->phoneNumber, curr->birth);
+        if(curr->birth[4] == str[0] && str[1] == curr->birth[5] ){
+          printf("%s %s %s\n", curr->name, curr->phoneNumber, curr->birth);
+          curr = curr->next;
         }
-        if(curr->birth[4] == '1' && str[0] == curr->birth[4] && str[1] == curr->birth[5]){
+        else if(curr->birth[4] == '0' && str[0] == curr->birth[5] ){
+          printf("%s %s %s\n", curr->name, curr->phoneNumber, curr->birth);
+          curr = curr->next;
+        }
+        else if(curr->birth[4] == '1' && str[0] == curr->birth[4] && str[1] == curr->birth[5]){
             printf("%s %s %s\n", curr->name, curr->phoneNumber, curr->birth);
-        } 
-        curr = curr->next;
+            curr = curr->next;
+        } else curr = curr->next; 
     }
 }
 void ReadFile(){
 
     FILE *pFile = NULL;
 
-	pFile = fopen("contactlist.jwdata", "r");
+	pFile = fopen("contactslist.jwdata", "r");
 	if(pFile != NULL){
 		while(!feof(pFile)){
             struct contactData* tmp_ = (struct contactData*)malloc(sizeof(struct contactData));
@@ -103,7 +126,8 @@ void ReadFile(){
             tmp_-> birth = (char*)malloc(sizeof(char)*9);
 
             static int cnt_ = 0;
-            fscanf( pFile, "%s %s %s\n", tmp_->name, tmp_->phoneNumber, tmp_->birth );
+            int chk = fscanf( pFile, "%s %s %s\n", tmp_->name, tmp_->phoneNumber, tmp_->birth );
+            if(chk == -1) break;
             cnt_++;
 
             struct contactData* curr = data;
@@ -129,12 +153,12 @@ void ReadFile(){
         }
 		fclose(pFile);
 	} else {
-        printf("Can not find file!!\nCheck file direction.");
+        printf("No contacts data\nCheck file direction.\n");
     }
 }
 
 void WriteFile(){
-    FILE *fp = fopen("contactlist.jwdata", "w");    // hello.txt 파일을 쓰기 모드(w)로 열기.
+    FILE *fp = fopen("contactslist.jwdata", "w");    // hello.txt 파일을 쓰기 모드(w)로 열기.
                                            // 파일 포인터를 반환
 
     struct contactData* curr = data->next;
