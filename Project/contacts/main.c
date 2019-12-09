@@ -1,6 +1,5 @@
 #include "data.h"
 void menu();
-
 int main(){
     data = (struct contactData*)malloc(sizeof(struct contactData));
     ReadFile();
@@ -29,8 +28,11 @@ void menu() {
         break;
     
     case 3:
-        Delete();
-        WriteFile();
+        if(data->next == NULL) printf("No record founded.\n");
+        else {
+          Delete();
+          WriteFile();
+        }
         break;
     
     case 4:
